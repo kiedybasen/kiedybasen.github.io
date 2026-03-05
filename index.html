@@ -47,7 +47,7 @@
         ]
         countdown.innerHTML = "Do następnego basenu pozostało:<br>"
         loop.forEach(divide => {
-            let temp = Math.abs(Math.floor(difference/divide.val)+1)
+            let temp = Math.abs(Math.ceil(difference/divide.val))
             let tempstr = divide.names[2]
             if(temp == 1) tempstr = divide.names[0]
             if(temp%10 > 1 && temp%10 < 5 && (temp%100 < 11 || temp%100 > 19)) tempstr = divide.names[1]
