@@ -4,8 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            background-image: url(https://leisurepools.eu/wp-content/uploads/2020/06/best-type-of-swimming-pool-for-my-home_2.jpg);
+        }
+        #countdown{
+            width: 80vh;
+            height: 10vh;
+            justify-self: center;
+            font-size: 1.5em;
+            text-align: center;
+            background-color: rgba(0, 105, 200, 0.6);
+            color: white;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    DZIŚ BYŁ BASEN
+    <div id="countdown"></div>
 </body>
+<script>
+    class Time{
+        constructor(yr,mth,day,hr,min,sec,msec){
+            this.yr = yr;this.mth=mth,this.day=day;this.hr=hr;this.min=min;this.sec=sec;this.msec=msec
+        }
+    }
+    let countdown = document.querySelector("#countdown");
+    let basen = new Time(2026,3,5,11,25,0,0)
+    function display(){
+        let time = new Date()
+        let cur = new Time(time.getFullYear(),time.getMonth(),time.getDate(),time.getHours(),time.getMinutes(),time.getSeconds(),time.getMilliseconds())
+        let diff = new Time(cur.yr-basen.yr,cur.mth-basen.mth,cur.day-basen.day,cur.hr-basen.hr,cur.min-basen.min,cur.sec-basen.sec,cur.msec-basen.msec)
+        let difference = diff.sec + diff.min*60 + diff.hr*3600 + diff.day*86400
+        while(difference>0){
+            difference-=86400*21
+        }
+        let loop = [
+            {val:86400,names:["dzień","dni","dni"]},
+            {val:3600,names:["godzina","godziny","godzin"]},
+            {val:60,names:["minuta i","minuty i","minut i"]},
+            {val:1,names:["sekunda","sekundy","sekund"]}
+        ]
+        countdown.innerHTML = "Do następnego basenu pozostało:<br>"
+        loop.forEach(divide => {
+            let temp = Math.abs(Math.floor(difference/divide.val)+1)
+            let tempstr = divide.names[2]
+            if(temp == 1) tempstr = divide.names[0]
+            if(temp%10 > 1 && temp%10 < 5 && (temp%100 < 11 || temp%100 > 19)) tempstr = divide.names[1]
+            countdown.innerHTML+=`${Math.floor(temp)} ${tempstr} `
+            difference %= divide.val
+        });
+        setTimeout(() => {
+            display()
+        }, 1000);
+    }
+    display()
+</script>
 </html>
